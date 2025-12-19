@@ -3,6 +3,7 @@ import "dotenv/config";
 export const ENV = {
   PORT: process.env.PORT,
   MONGODB_URL: process.env.MONGODB_URL,
+  DUMMY_HASH: process.env.DUMMY_HASH,
   JWT_SECRET: process.env.JWT_SECRET,
   NODE_ENV: process.env.NODE_ENV,
   CLIENT_URL: process.env.CLIENT_URL,
