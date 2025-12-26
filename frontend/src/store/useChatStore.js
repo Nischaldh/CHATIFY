@@ -12,6 +12,7 @@ export const useChatStore = create((set,get)=>({
     isUsersLoading: false,
     isMessagesLoading: false,
     isSoundEnabled: localStorage.getItem("isSoundEnabled")==="true",
+    onlineUsers: [],
 
 
     toggleSound: () => {
@@ -38,6 +39,7 @@ export const useChatStore = create((set,get)=>({
             set({isUsersLoading:true});
         try {
             const res = await axiosInstance.get("/messages/chats");
+            console.log(res.data)
             set({chats:res.data.chatPartners});     
         } catch (error) {
             toast.error(error.response.data.messages)
@@ -47,5 +49,25 @@ export const useChatStore = create((set,get)=>({
 
     },
 
-
+    getMessagesByUserId: async(userId)=>{
+        set({isMessagesLoading:true})
+        try {
+            const res = await axiosInstance.get(`/messages/${userId}`);
+            set({messages:res.data.messages})
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Something went wrong");
+            
+        }finally{
+            set({isMessagesLoading:false})
+        }
+    },
+    sendMessage: async(messageData) =>{
+        const {selectedUser, messages} = get()
+        try {
+            const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData)
+            set({messages: messages.concat(res.data)})
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Something went wrong")
+        }
+    }
 }))

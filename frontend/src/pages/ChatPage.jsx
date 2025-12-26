@@ -2,10 +2,11 @@ import BorderAnmiatedContainer from "../components/BorderAnimatedContainer"
 import { useChatStore } from "../store/useChatStore"
 import ProfileHeader from "../components/ProfileHeader";
 import ActiveTabSwitch from "../components/ActiveTabSwitch";
-import ChatList from "../components/ChatList";
+import ChatsList from "../components/ChatsList";
 import ContactList from "../components/ContactList";
 import ChatContainer from "../components/ChatContainer";
-import NoConversationPlaceHolder from "../components/NoConversationPlaceHolder";
+import NoConversationPlaceholder from "../components/NoConversationPlaceHolder";
+
 
 const ChatPage = () => {
   const {activeTab, selectedUser} = useChatStore();
@@ -17,14 +18,14 @@ const ChatPage = () => {
           <ProfileHeader/>
           <ActiveTabSwitch/>
           <div className="flex-1 overflow-y-auto p-4 space-y-2">
-          {activeTab === "chats"?<ChatList />:<ContactList />}
+          {activeTab === "chats"?<ChatsList />:<ContactList />}
           </div>
         </div>
         {/* Left Side Ends */}
 
         {/* Rigth Side Begins */}
         <div className="flex-1 flex flex-col bg-slate-900/50 blackdrop-blur-sm">
-        {selectedUser? <ChatContainer />:<NoConversationPlaceHolder/>}
+        {selectedUser? <ChatContainer />:<NoConversationPlaceholder/>}
         </div>
         {/* Right Side Ends */}
       </BorderAnmiatedContainer>
