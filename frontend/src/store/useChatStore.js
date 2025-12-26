@@ -11,13 +11,13 @@ export const useChatStore = create((set,get)=>({
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
-    isSoundEndabled: localStorage.getItem("isSoundEnabled")===true,
+    isSoundEnabled: localStorage.getItem("isSoundEnabled")==="true",
 
 
-
-    toggleSound: ()=>{
-        localStorage.setItem("isSoundEnabled",!get().isSoundEndabled)
-        set({isSoundEndabled:!get().isSoundEndabled})
+    toggleSound: () => {
+        const newValue = !get().isSoundEnabled;
+        localStorage.setItem("isSoundEnabled", newValue);
+        set({ isSoundEnabled: newValue });
     },
     setActiveTab: (tab)=>set({activeTab: tab}),
     setSelectedUser: (selectedUser)=>set({selectedUser}),
@@ -26,6 +26,7 @@ export const useChatStore = create((set,get)=>({
         set({isUsersLoading:true});
         try {
             const res = await axiosInstance.get("/messages/contacts");
+            console.log(res.data)
             set({allContacts:res.data});     
         } catch (error) {
             toast.error(error.response.data.messages)
@@ -37,7 +38,7 @@ export const useChatStore = create((set,get)=>({
             set({isUsersLoading:true});
         try {
             const res = await axiosInstance.get("/messages/chats");
-            set({chats:res.data});     
+            set({chats:res.data.chatPartners});     
         } catch (error) {
             toast.error(error.response.data.messages)
         }finally{
