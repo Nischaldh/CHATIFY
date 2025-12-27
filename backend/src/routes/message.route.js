@@ -5,7 +5,7 @@ import { arcjectProtection } from "../middleware/arcjet.middleware.js";
 
 const messageRouter = express.Router()
 
-// messageRouter.use(arcjectProtection)
+messageRouter.use(arcjectProtection)
 messageRouter.use(protectRoute)
 
 messageRouter.get("/contacts",getAllContacts);
